@@ -1,24 +1,6 @@
 ---
 - hosts: all
-  become: yes
   tasks:
-    - name: create git user
-      user:
-        name: git
-    - name: create git ssh folder
-      file:
-        path: /home/git/.ssh
-        state: directory
-        owner: git
-        mode: '0700'
-    - name: create authorized key file
-      file:
-        path: /home/git/.ssh/authorized_keys
-        state: touch
-        owner: git
-        mode: '0600'
-    - name: create git repo dir
-      file:
-        path: /srv/git
-        state: directory
-        owner: git
+    - name: create ssh key
+      community.crypto.openssh_keypair:
+        path: /home/vagrant/.ssh/id_rsa
