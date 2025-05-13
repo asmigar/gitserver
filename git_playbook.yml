@@ -12,13 +12,26 @@
         owner: git
         mode: '0700'
     - name: create authorized key file
-      file:
-        path: /home/git/.ssh/authorized_keys
-        state: touch
+      copy:
+        content: ""
+        dest: /home/git/.ssh/authorized_keys
         owner: git
         mode: '0600'
-    - name: create git repo dir
+
+    - name: Create git repos dir
       file:
         path: /srv/git
         state: directory
         owner: git
+
+    - name: Create git repo
+      file:
+        path: /srv/git/project.git
+        state: directory
+        owner: git
+
+    - name: Initialize git repository
+      command:
+        cmd: git init --bare
+        chdir: /srv/git/project.git
+        creates: /srv/git/project.git/description

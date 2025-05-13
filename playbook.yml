@@ -1,12 +1,28 @@
 ---
 - hosts: all
   tasks:
-    - name: create ssh key
+    - name: Create ssh key
       community.crypto.openssh_keypair:
         path: /home/vagrant/.ssh/id_rsa
         comment: "{{ ansible_facts.hostname }}"
-    - name: add gitserver host entry
+      register: ssh_key_pair
+      notify: Copy public key to gitserver
+
+
+    - name: Add gitserver host entry
       ansible.builtin.lineinfile:
         path: /etc/hosts
         line: 192.168.50.4 gitserver
       become: yes
+
+    - name: Create project directory
+      file:
+        path: /home/vagrant/myproject
+        state: directory
+
+  handlers:
+    - name: Copy public key to gitserver
+      delegate_to: gitserver
+      ansible.builtin.lineinfile:
+        path: /home/vagrant/.ssh/authorized_keys
+        line: "{{ ssh_key_pair.public_key }} {{ ssh_key_pair.comment }}"
