@@ -5,3 +5,8 @@
       community.crypto.openssh_keypair:
         path: /home/vagrant/.ssh/id_rsa
         comment: "{{ ansible_facts.hostname }}"
+    - name: add gitserver host entry
+      ansible.builtin.lineinfile:
+        path: /etc/hosts
+        line: 192.168.50.4 gitserver
+      become: yes

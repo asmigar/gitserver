@@ -1,7 +1,6 @@
 Vagrant.configure("2") do |config|
   config.vm.box = "bento/ubuntu-22.04"
   config.vm.box_version = "202502.21.0"
-  config.vm.network "private_network", type: "dhcp"
 
    config.vm.provider "virtualbox" do |vb|
      vb.memory = 1024
@@ -13,6 +12,7 @@ Vagrant.configure("2") do |config|
  	git.vm.provision :ansible do |ansible|
         ansible.playbook = "git_playbook.yml"
   	end
+  	git.vm.network "private_network", ip: "192.168.50.4"
   end
 
   config.vm.define "john" do |john|
@@ -20,6 +20,7 @@ Vagrant.configure("2") do |config|
   	john.vm.provision :ansible do |ansible|
         ansible.playbook = "playbook.yml"
     end
+    john.vm.network "private_network", type: "dhcp"
   end
 
   config.vm.define "lara" do |lara|
@@ -27,5 +28,6 @@ Vagrant.configure("2") do |config|
     lara.vm.provision :ansible do |ansible|
         ansible.playbook = "playbook.yml"
     end
+    lara.vm.network "private_network", type: "dhcp"
   end
 end
