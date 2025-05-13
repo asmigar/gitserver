@@ -20,9 +20,20 @@
         path: /home/vagrant/myproject
         state: directory
 
+    - name: Initialize git repository
+      command:
+        cmd: git init
+        chdir: /home/vagrant/myproject
+
+    - name: Create a README file
+      copy:
+        content: "Sample Git repo"
+        dest: /home/vagrant/myproject/README.md
+
   handlers:
     - name: Copy public key to gitserver
       delegate_to: gitserver
       ansible.builtin.lineinfile:
-        path: /home/vagrant/.ssh/authorized_keys
+        path: /home/git/.ssh/authorized_keys
         line: "{{ ssh_key_pair.public_key }} {{ ssh_key_pair.comment }}"
+      become: yes

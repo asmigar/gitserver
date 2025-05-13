@@ -35,3 +35,11 @@
         cmd: git init --bare
         chdir: /srv/git/project.git
         creates: /srv/git/project.git/description
+      notify: Set git as owner of the repo
+
+  handlers:
+    - name: Set git as owner of the repo
+      file:
+        path: /srv/git/project.git
+        owner: git
+        recurse: true
