@@ -13,7 +13,7 @@ Runs a git server along with two client machine. https://git-scm.com/book/en/v2/
 vagrant up
 ```
 
-2. Login into the John's vm to create initial commit.
+2. Login into the John Wick's vm to create initial commit.
 ```shell
 vagrant ssh john
 $ vagrant@john: cd myproject
