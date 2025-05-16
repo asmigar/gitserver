@@ -32,3 +32,9 @@ $ vagrant@lara: vi README.md
 $ vagrant@lara: git commit -am "fix for README file"
 $ vagrant@lara: git push origin master
 ```
+
+# Cleanup
+Once you are done with your experimentation, you would wish to bring down the VMs(as they are eating your machine's resources). On your host machine run:
+```shell
+vagrant destroy -f
+```
