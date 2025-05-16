@@ -1,6 +1,7 @@
 Vagrant.configure("2") do |config|
   config.vm.box = "bento/ubuntu-22.04"
   config.vm.box_version = "202502.21.0"
+  developers = ["john", "lara"]
 
    config.vm.provider "virtualbox" do |vb|
      vb.memory = 1024
@@ -15,20 +16,22 @@ Vagrant.configure("2") do |config|
   	git.vm.network "private_network", ip: "192.168.50.4"
   end
 
-  config.vm.define "john" do |john|
-  	john.vm.hostname = "john"
-  	john.vm.provision :ansible do |ansible|
-        ansible.playbook = "provisioning/playbook.yml"
+  developers.each do |developer|
+    config.vm.define "#{developer}" do |dev|
+  	    dev.vm.hostname = "#{developer}"
+  	    dev.vm.provision :ansible do |ansible|
+            ansible.playbook = "provisioning/playbook.yml"
+        end
+        dev.vm.network "private_network", type: "dhcp"
+        dev.vm.post_up_message ="Login into #{developer} VM to start using gitserver. For more details: https://git-scm.com/book/en/v2/Git-on-the-Server-Setting-Up-the-Server"
     end
-    john.vm.network "private_network", type: "dhcp"
-    john.vm.post_up_message ="Login into John's VM to start using gitserver. For more details: https://git-scm.com/book/en/v2/Git-on-the-Server-Setting-Up-the-Server"
   end
 
-  config.vm.define "lara" do |lara|
-    lara.vm.hostname = "lara"
-    lara.vm.provision :ansible do |ansible|
-        ansible.playbook = "provisioning/playbook.yml"
-    end
-    lara.vm.network "private_network", type: "dhcp"
-  end
+#   config.vm.define "lara" do |lara|
+#     lara.vm.hostname = "lara"
+#     lara.vm.provision :ansible do |ansible|
+#         ansible.playbook = "provisioning/playbook.yml"
+#     end
+#     lara.vm.network "private_network", type: "dhcp"
+#   end
 end
