@@ -19,6 +19,7 @@ vagrant ssh john
 $ vagrant@john: cd myproject
 $ vagrant@john: git add README.md
 $ vagrant@john: git commit -m "Initial commit"
+$ vagrant@john: git remote add origin git@gitserver:/srv/git/project.git
 $ vagrant@john: git push origin master
 ```
 

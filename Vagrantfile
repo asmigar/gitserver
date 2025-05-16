@@ -10,7 +10,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "gitserver" do |git|
   	git.vm.hostname = "gitserver"
  	git.vm.provision :ansible do |ansible|
-        ansible.playbook = "git_playbook.yml"
+        ansible.playbook = "provisioning/git_playbook.yml"
   	end
   	git.vm.network "private_network", ip: "192.168.50.4"
   end
@@ -18,7 +18,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "john" do |john|
   	john.vm.hostname = "john"
   	john.vm.provision :ansible do |ansible|
-        ansible.playbook = "playbook.yml"
+        ansible.playbook = "provisioning/playbook.yml"
     end
     john.vm.network "private_network", type: "dhcp"
     john.vm.post_up_message ="Login into John's VM to start using gitserver. For more details: https://git-scm.com/book/en/v2/Git-on-the-Server-Setting-Up-the-Server"
@@ -27,7 +27,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "lara" do |lara|
     lara.vm.hostname = "lara"
     lara.vm.provision :ansible do |ansible|
-        ansible.playbook = "playbook.yml"
+        ansible.playbook = "provisioning/playbook.yml"
     end
     lara.vm.network "private_network", type: "dhcp"
   end
