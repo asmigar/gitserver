@@ -26,12 +26,4 @@ Vagrant.configure("2") do |config|
         dev.vm.post_up_message ="Login into #{developer} VM to start using gitserver. For more details: https://git-scm.com/book/en/v2/Git-on-the-Server-Setting-Up-the-Server"
     end
   end
-
-#   config.vm.define "lara" do |lara|
-#     lara.vm.hostname = "lara"
-#     lara.vm.provision :ansible do |ansible|
-#         ansible.playbook = "provisioning/playbook.yml"
-#     end
-#     lara.vm.network "private_network", type: "dhcp"
-#   end
 end
